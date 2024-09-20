@@ -1,0 +1,8 @@
+name: frontend-production
+
+services:
+  rnsfront:
+    build:
+      context: .
+    ports:
+      - "8887:80"
