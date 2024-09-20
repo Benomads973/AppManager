@@ -90,9 +90,11 @@ docker-compose up --build
 
 ## Default Endpoints
 
+```bash
 frontend: `http://localhost:8887`
 backend: `http://localhost:5000`
 mongo-express: `http://localhost:8082`
+```
 
 ---
 
