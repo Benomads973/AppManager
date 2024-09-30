@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export const registerUser = createAsyncThunk('user/register', async (userData) => {
   try {
-    const response = await axios.post('http://localhost:5000/users/register', userData);
+    const response = await axios.post('http://localhost:5000/', userData);
     return response.data;
   } catch (err) {
     throw new Error(err.message)

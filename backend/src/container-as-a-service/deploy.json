@@ -1,0 +1,96 @@
+{
+    "hosts": [
+        {
+            "host": "127.0.0.1",
+            "host_port": 22,
+            "user": "zero",
+            "password": ""
+        }
+    ],
+
+    "content": { },
+
+    "pods": {
+        "containers": [
+            {
+                "url": "manager.benomads.fr",
+                "name": "app-label-mysql-front",
+                "image": "maissacrement/benomads-applabel:mysql-react-front-0.0.1",
+                "ports": [
+                    { "containerPort": "80" }
+                ],
+                "env": [
+                    {
+                        "name": "VUE_APP_BACKEND",
+                        "value": "back-manager.benomads.fr"
+                    }
+                ]
+            },
+            {
+                "url": "back-manager.benomads.fr",
+                "name": "app-label-mysql-back",
+                "image": "maissacrement/benomads-applabel:mysql-react-back-0.0.3",
+                "ports": [
+                    { "containerPort": 5000 }
+                ],
+                "env": [
+                    {
+                        "name": "APP_PORT",
+                        "value": "5000"
+                    },
+                    {
+                        "name": "DB_ROOT_PASSWORD",
+                        "value": "database_dev"
+                    },
+                    {
+                        "name": "DB_USERNAME",
+                        "value": "database_dev"
+                    },
+                    {
+                        "name": "DB_PASSWORD",
+                        "value": "database_dev"
+                    },
+                    {
+                        "name": "DB_NAME",
+                        "value": "test"
+                    },
+                    {
+                        "name": "DB_HOSTNAME",
+                        "value": "client-mysql"
+                    }
+                ],
+                "provideContentPath": "/app/src/static/json"
+            },
+            {
+		        "name": "client-mysql",
+                "image": "mysql",
+                "ports": [
+                    { "containerPort": "3306" }
+                ],
+                "env": [
+                    {
+                        "name": "MYSQL_ROOT_PASSWORD",
+                        "value": "database_dev"
+                    },
+                    {
+                        "name": "MYSQL_USER",
+                        "value": "database_dev"
+                    },
+                    {
+                        "name": "MYSQL_PASSWORD",
+                        "value": "database_dev"
+                    },
+                    {
+                        "name": "MYSQL_INITDB_SKIP_TZINFO",
+                        "value": "yes"
+                    },
+                    {
+                        "name": "MYSQL_DATABASE",
+                        "value": "test"
+                    }
+                ],
+                "state": "protected"
+            }
+        ]
+    }
+}

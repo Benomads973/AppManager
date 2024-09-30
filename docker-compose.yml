@@ -3,19 +3,22 @@ name: AppManager
 services:
 
   rnsfront:
-    build:
-      context: ./frontend
+    image: maissacrement/benomads-appmanager-front:0.0.1 # Get from internet
+    #build: # Build locally
+    #  context: ./frontend
     ports:
       - "8887:80"
 
   # BACKEND SERVER MACHINE NAME
   rnsback:
-    build:
-      context: ./backend # Building Docker file from '.' the current repository
+    image: maissacrement/benomads-appmanager-front:0.0.1 # Get from internet
+    #build: # build locally
+    #  context: ./backend # Building Docker file from '.' the current repository
     depends_on:
       - mongodb
-    ports:
-      - "$APP_PORT:$APP_PORT"
+    #ports:
+    #  - "$APP_PORT:$APP_PORT"
+    scale: 20
     networks:
       - mongo-private-tunnel
     environment:
@@ -23,6 +26,8 @@ services:
       MONGO_PASSWORD: $MONGO_PASSWORD
       MONGO_URL: $MONGO_URL
       APP_PORT: $APP_PORT
+      BENOMADS_HOST: $BENOMADS_HOST
+      BENOMADS_API_KEY: $BENOMADS_API_KEY
       
   # N'exposé mongo que quand vous etes en devellopement
   # MONGODB MACHINE NAME

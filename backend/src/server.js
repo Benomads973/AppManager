@@ -3,7 +3,9 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 //const userRoutes = require('./routes/userRoutes');
-const userRoutes = require('./routes/user')
+// const userRoutes = require('./routes/user')
+
+const routes = require('./routes')
 
 const port = parseInt(process.env.APP_PORT) || undefined;
 
@@ -36,7 +38,9 @@ app.use((_,res,next) => {
   next();
 });
 
-app.use('/users', userRoutes);
+//app.use('/users', userRoutes);
+
+app.use('/', routes);
 
 app.listen(port, () => {
   console.log('Server is running on port 5000');

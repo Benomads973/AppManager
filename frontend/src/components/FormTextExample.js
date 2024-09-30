@@ -4,8 +4,16 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../features/user/userSlice';
 import Button from 'react-bootstrap/Button';
+import { createYourApp } from '../providers/deploy'
 
 import { useState } from 'react';
+
+const toBase64 = file => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = () => resolve(reader.result);
+  reader.onerror = reject;
+});
 
 function SiteInfo (props) {
   const data = props.state
@@ -26,18 +34,20 @@ function FormTextExample() {
     formData.append('password', data.password);
     formData.append('org', data.org);
     formData.append('appname', data.appname);
+    console.log(data)
     formData.append('logo', !!data.logo?.length ? data.logo[0] : null);
 
     try {
-      await dispatch(registerUser(formData)).unwrap();
-      setSiteState('success !!')
+      const logo = !!data.logo?.length ? await toBase64(data.logo[0]) : ''
+      await createYourApp({ ...data, logo })
+      //await dispatch(registerUser(formData)).unwrap();
+      //setSiteState('success !!')
     } catch (err) {
       setSiteState(err.message)
     }
   };
   
   const formCss = {
-    maxWidth: "400px",
     padding: "30px"
   }
 
